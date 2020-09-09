@@ -52,3 +52,31 @@ room['treasure'].s_to = room['narrow']
 
 directions = ['n', 'e', 's', 'w']
 
+player_name = input('Welcome adventurer! What is your name?')
+player = Player(player_name, room['outside'])
+print(f"Good Luck, {player_name}! Your Journey begins to the north!")
+
+
+while True:
+    user_input = input(f"Which area would you like to visit? ").lower().split()
+    if len(user_input) > 2 or len(user_input) < 1:
+            print(f"Sorry, {player.name}, that location is not valid. 'help' is available should you wish to use it")
+        
+    else: 
+        if user_input[0] == "q" or user_input[0] == "quit":
+                print(f"Thanks for playing {player.name}! See you on your next adventure!")
+                break
+            
+        if user_input[0] == 'h' or user_input[0] == "help":
+                print("Commands:\n'n' -move North\n 's' - move South\n 'e' - move East\n 'w' - move West\n 'h' or 'help' -Help Menu\n 'q' or 'quit' - Exit Game\n")
+                continue
+            
+        if user_input[0] in directions:
+            try:
+                player.move(user_input[0])
+                print(f"You are in the {player.current_room.name}. \n{player.current_room.description}")
+            except AttributeError:
+                print(f"{player.name}, your journey begins now!")
+                
+        else:
+            print('Movement not allowed, please enter a valid destination (n, e, s, w) to move around the map')
